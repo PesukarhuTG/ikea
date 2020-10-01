@@ -12,7 +12,8 @@ export const getData = {
 
     /* далее метод делает запрос на сервер с помощью fetch через url, указанный выше
     и получив данные с помощью then обрабатывает promise, который вернулся.
-    Обрабатываем и из json формата превращаем в массив и отдаем его в ф-цию process*/
+    Обрабатываем и из json формата превращаем в массив и отдаем его в ф-цию process.
+    Т.е. get - это основная ф-ция, а далее - это все фильтры*/
     get(process) {
         fetch(this.url)
             .then((response) => response.json())
@@ -72,14 +73,26 @@ export const getData = {
 
     catalog(callback) {
         this.get((data) => {
-            //code
+            const result = data.reduce((arr, item) => {
+                if (!arr.includes(item.category)) {
+                    arr.push(item.category);
+                }
+                return arr;
+            }, []);
             callback(result);
         });
     },
 
     subCatalog(value, callback) {
         this.get((data) => {
-            //code
+            const result = data
+            .filter(item => item.category === value)
+            .reduce((arr, item) => {
+                if (!arr.includes(item.subcategory)) {
+                    arr.push(item.subcategory);
+                }
+                return arr;
+            }, []);
             callback(result);
         });
     },

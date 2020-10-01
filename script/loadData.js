@@ -1,7 +1,5 @@
 import { getData } from './getData.js';
 
-const wishList = ['idd005', 'idd100', 'idd055', 'idd010', 'idd025'];
-    
 const cartList = [
         {
             id: 'idd031',
@@ -21,23 +19,6 @@ const cartList = [
 
 export const loadData = () => {
 
-    if (location.search) {
-        //чтобы не кодировался русский непонятными знаками, декодируем:
-        const search = decodeURI(location.search);
-
-        //полученную выше строку разбиваем и записываем значения в переменные
-        const prop = search.split('=')[0].substring(1); // subcat
-        const value = search.split('=')[1]; //название категории
-
-        if (prop === 's') {
-            getData.search(value, (data) => console.log(data));
-        } else if (prop === 'wishlist') {
-            getData.wishList(wishList, (data) => console.log(data));
-        } else if (prop === 'cat' || prop === 'subcat') {
-            getData.category(prop, value, (data) => console.log(data));
-        }
-    }
-
     if (location.hash) {
         getData.item(location.hash.substring(1), (data) => console.log(data));
     }
@@ -46,7 +27,7 @@ export const loadData = () => {
         getData.cart(cartList, (data) => console.log(data));
     }
 
-    getData.catalog((data) => console.log(data));
-    getData.subcatalog("Декор", (data) => console.log(data));
+    //getData.catalog((data) => console.log(data));
+    //getData.subCatalog("Декор", (data) => console.log(data));
 
 };
