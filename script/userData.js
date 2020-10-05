@@ -1,22 +1,7 @@
-const wishList = [ 'idd005', 'idd100', 'idd077', 'idd033'];
-
-const cartList = [
-    {
-        id: 'idd031',
-        count: 3
-    },
-    {
-        id: 'idd041',
-        count: 1
-    },
-    {
-        id: 'idd051',
-        count: 2
-    },
-];
+import { getLocalStorage, setLocalStorage } from './storage.js';
 
 const userData = {
-    wishListData: [],
+    wishListData: getLocalStorage('wishList'),
     get wishList() {
         return this.wishListData;
     },
@@ -27,9 +12,10 @@ const userData = {
         } else {
             this.wishListData.push(id);
         }
+        setLocalStorage('wishList', this.wishList);
     },
 
-    cartListData: [],
+    cartListData: getLocalStorage('cartList'),
     get cartList() { 
         return this.cartListData;
     },
@@ -44,6 +30,24 @@ const userData = {
             };
             this.cartListData.push(obj); //если объекта нет в корзине, добавляем
         }
+        setLocalStorage('cartList', this.cartList);
+    },
+
+    set changeCountCartList(itemCart) {
+        let obj = this.cartListData.find(item => item.id === itemCart.id);
+        obj.count = itemCart.count;
+        setLocalStorage('cartList', this.cartList);
+    },
+
+    set deleteItemCart(idd) {
+        let index = -1; //чтобы js сразу видел число
+        this.cartList.forEach((item, i) => {
+            if (item.id === idd) {
+                index = i;
+            }
+        });
+        this.cartList.splice(index, 1);
+        setLocalStorage('cartList', this.cartList);
     },
 };
 
