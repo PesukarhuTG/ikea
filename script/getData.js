@@ -59,7 +59,7 @@ export const getData = {
             const result = data.filter(item => {
                 //св-ва prop каждого объекта также перебираем через for in
                 for (const prop in item) {
-                    if (PARAM.search.includes(prop) && 
+                    if (PARAM.search.includes(prop) &&
                         //достаем значение св-ва (~Мебель), приводим к нижнему регистру (~мебель)
                         //и проверяем, есть в этом значении то, что мы искали
                         item[prop].toLowerCase().includes(value.toLowerCase())) {
@@ -86,13 +86,13 @@ export const getData = {
     subCatalog(value, callback) {
         this.get((data) => {
             const result = data
-            .filter(item => item.category === value)
-            .reduce((arr, item) => {
-                if (!arr.includes(item.subcategory)) {
-                    arr.push(item.subcategory);
-                }
-                return arr;
-            }, []);
+                .filter(item => item.category === value)
+                .reduce((arr, item) => {
+                    if (!arr.includes(item.subcategory)) {
+                        arr.push(item.subcategory);
+                    }
+                    return arr;
+                }, []);
             callback(result);
         });
     },
