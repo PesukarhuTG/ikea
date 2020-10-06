@@ -52,7 +52,7 @@ const generateGoodsPage = () => {
         goodsList.addEventListener('click', e => {
             const btnAddCard = e.target.closest('.btn-add-card');
             if (btnAddCard) {
-                e.preventDefault(); //запрет перезагрузки стр
+                e.preventDefault();
                 userData.cartList = btnAddCard.dataset.idd;
             }
         });

@@ -10,14 +10,23 @@ const PARAM = {
 export const getData = {
     url: 'database/dataBase.json',
 
+    async getData (url) {
+        const response = await fetch(url); //ответ от сервера
+        
+        if (!response.ok) {
+            throw new Error(`Ошибка по адресу ${url}, статус ошибки ${response}`);
+        }
+        return await response.json();
+    },
+
     /* далее метод делает запрос на сервер с помощью fetch через url, указанный выше
     и получив данные с помощью then обрабатывает promise, который вернулся.
     Обрабатываем и из json формата превращаем в массив и отдаем его в ф-цию process.
     Т.е. get - это основная ф-ция, а далее - это все фильтры*/
     get(process) {
-        fetch(this.url)
-            .then((response) => response.json())
-            .then(process);
+        this.getData(this.url)
+            .then(process)
+            .catch((err) => console.error(err));
     },
 
     wishList(list, callback) {

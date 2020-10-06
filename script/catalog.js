@@ -6,8 +6,6 @@ export const catalog = () => {
     const btnBurger = document.querySelector('.btn-burger');
     const catalog = document.querySelector('.catalog');
     const subCatalog = document.querySelector('.subcatalog');
-    //const subCatalogHeader = document.querySelector('.subcatalog-header');
-    //const btnRetun = document.querySelector('.btn-return');
 
     const overlay = document.createElement('div');
     overlay.classList.add('overlay');
@@ -50,7 +48,6 @@ export const catalog = () => {
     overlay.addEventListener('click', closeMenu);
     catalog.addEventListener('click', handlerCatalog);
     subCatalog.addEventListener('click', e => {
-        //const btnReturn = e.target.closest('.btn-return');
         if (btnBurger) {
             closeSubMenu();
         }
@@ -61,6 +58,5 @@ export const catalog = () => {
             closeMenu();
         }
     });
-
 };
 

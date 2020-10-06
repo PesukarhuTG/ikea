@@ -1,6 +1,41 @@
 import { getData } from './getData.js';
 import userData from './userData.js';
 
+const sendData = async (url, data) => {
+    const response = await fetch(url, {
+        method: 'POST',
+        body: data,
+    });
+
+    if (!response.ok) {
+        throw new Error(`Ошибка по адресу ${url}, статус ошибки ${response}`);
+    }
+
+    return await response.json();
+};
+
+//ф-ция отправки корзины
+const sendCart = () => { 
+    const cartForm = document.querySelector('.cart-form');
+    
+    cartForm.addEventListener('submit', e => {
+        e.preventDefault();
+        const formData = new FormData(cartForm);
+
+        formData.set('order', JSON.stringify(userData.cartList)); 
+        //передаем наш заказ в формате json. Если оставить просто data, то передастся order: [object Object]
+
+        sendData('https://jsonplaceholder.typicode.com/posts', formData)
+                .then(() => {
+                    cartForm.reset(); //очистка формы
+                })
+                .catch((err) => {
+                    console.log(err); //если ошибка, то выводим
+                });
+
+    });
+};
+
 const generateCartPage = () => {
 
     if (location.pathname.includes('cart')) {
@@ -66,7 +101,7 @@ const generateCartPage = () => {
                 </li>
                 `);
             });
-            cartTotalPrice.textContent = totalPrice;
+            cartTotalPrice.textContent = `${totalPrice}.-`;
         };
 
         cartList.addEventListener('change', e => {
@@ -89,6 +124,7 @@ const generateCartPage = () => {
         });
 
         getData.cart(userData.cartList, renderCartList);
+        sendCart();
     }
 };
 
